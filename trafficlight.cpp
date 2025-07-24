@@ -2,18 +2,37 @@
 // Created by Ebose on 2025-07-23.
 //
 
+#include <iostream>
 #include "trafficlight.h"
 #include <chrono>
 #include <thread>
+#include <filesystem>
+namespace fs = std::filesystem;
 //whenever we make the light we're gonna make a thread
-const int red_stoptime = 50;
-const int green_stoptime = 45;
-const int yellow_stoptime = 5;
-trafficlight::trafficlight(int dir, int start_state) {
-    this->direction = dir;
-    this->stopSignal = false;
-    if (start_state == 2) {this->current = Green;}
-    else {this->current = Red;}
+const int red_stoptime = 10;
+const int green_stoptime = 6;
+const int yellow_stoptime = 2;
+void trafficlight::loadTexture() {
+    if (!textureLoaded) {
+        fs::path texturePath = fs::current_path() / "Traffic-Simulator" / "Graphics-elements" / "trafficlight.png";
+
+        if (!texture.loadFromFile(texturePath.string())) {
+            throw std::runtime_error("Error loading texture from file: " + texturePath.string());
+        }
+        textureLoaded = true;
+    }
+}
+
+trafficlight::trafficlight(int dir, int start_state): direction(dir), stopSignal(false), sprite(texture){
+    if (!textureLoaded) {
+        throw std::logic_error("Texture not loaded. Call loadTexture() first!");
+    }
+    this->current = (start_state == 2) ? Green : Red;
+    sprite.setOrigin({140, 275}); // Set origin to the center of the traffic light
+    for (int i = 0; i < 3; i++) {
+        states[i] = sf::IntRect({{275 * i,100}, {280,550}});
+    }
+    sprite.setTextureRect(states[current]);
 }
 void trafficlight::changecolour() {
     while (!stopSignal) {
@@ -29,6 +48,10 @@ void trafficlight::changecolour() {
     std::chrono::seconds(yellow_stoptime)
 );
     }
+}
+void trafficlight::draw(sf::RenderWindow &window) {
+    sprite.setTextureRect(states[current]);
+    window.draw(sprite);
 }
 
 void trafficlight::stop() {this->stopSignal = true;}
