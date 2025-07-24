@@ -23,6 +23,7 @@ public:
     int getstate();
     void stop();
     void draw(sf::RenderWindow& window);
+    void setposition(sf::Vector2f pos);
     static void loadTexture();
 };
 

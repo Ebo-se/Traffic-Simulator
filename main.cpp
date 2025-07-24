@@ -20,13 +20,13 @@ int main() {
 
     // Start the traffic light's state change in a separate thread
     std::thread lightThread(&trafficlight::changecolour, &light);
-
+    light.setposition(sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2));
     while (window.isOpen()) {
         while (auto event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {window.close();}
         }
 
-        window.clear();
+        window.clear(sf::Color::White);
         light.draw(window);
         window.display();
     }
