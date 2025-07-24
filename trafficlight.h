@@ -23,8 +23,8 @@ public:
     int getstate();
     void stop();
     void draw(sf::RenderWindow& window);
-    void setposition(sf::Vector2f pos);
-    static void loadTexture();
-};
+    void setposition(sf::Vector2f position) {;sprite.setPosition(position);}
+    void setscale(sf::Vector2f scale) {sprite.setScale(scale);}
+    static void loadTexture();};
 
 #endif //TRAFFICLIGHT_H

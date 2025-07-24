@@ -24,10 +24,10 @@ trafficlight::trafficlight(int dir, int start_state): direction(dir), stopSignal
         throw std::logic_error("Texture not loaded. Call loadTexture() first!");
     }
     this->current = (start_state == 2) ? Green : Red;
-    sprite.setOrigin({553/6.f, 385/2.f}); // Set origin to the center of the traffic light
-    for (int i = 0; i < 3; i++) {
-        states[i] = sf::IntRect({{553/3 * i,66}, {553/3, 385}}); // Adjusted to match the texture size
-    }
+    sprite.setOrigin({85.f, 385/2.f}); // Set origin to the center of the traffic light
+    states[Red] = sf::IntRect({0, 66}, {170, 385});// Red light
+    states[Yellow] = sf::IntRect({553/3,66},{170, 385}); // Yellow light
+    states[Green] = sf::IntRect({553/3 + 170,66}, {170, 385}); // Green light
     sprite.setTextureRect(states[current]);
 }
 void trafficlight::changecolour() {
@@ -59,7 +59,4 @@ int trafficlight::getstate() {
         case Yellow:return 1;
         default: return -1;
     }
-}
-void trafficlight::setposition(sf::Vector2f pos) {
-    sprite.setPosition(pos);
 }
