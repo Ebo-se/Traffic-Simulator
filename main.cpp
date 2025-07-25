@@ -36,3 +36,17 @@ int main() {
     lightThread.join(); // Wait for thread to exit safely
     return 0;
 }
+sf::Sprite mapSpriteLoader(sf::Texture& map) //to load the sprite of map
+{
+    sf::Sprite map_sprite(map);
+    map_sprite.setOrigin({85.f, 385/2.f});
+    return map_sprite;
+}
+sf::Texture mapTextureLoader() //to load the texture of the ma[p
+{
+    sf::Texture map;
+    if (!map.loadFromFile("Graphic-elements/map.png")) {
+        throw std::runtime_error("Failed to load texture from Graphics-elements/map.png");
+    }
+    return map;
+}
