@@ -21,7 +21,8 @@ public:
     trafficlight(int dir, int start_state); //start state is either red or green
     void changecolour();
     int getstate();
-    void stop();
+    void stop(){stopSignal = true;}
+    void start(){this->stopSignal = false;}
     void draw(sf::RenderWindow& window);
     void setposition(sf::Vector2f position) {;sprite.setPosition(position);}
     void setscale(sf::Vector2f scale) {sprite.setScale(scale);}

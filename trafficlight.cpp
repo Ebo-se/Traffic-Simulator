@@ -50,7 +50,6 @@ void trafficlight::draw(sf::RenderWindow &window) {
     window.draw(sprite);
 }
 
-void trafficlight::stop() {this->stopSignal = true;}
 int trafficlight::getstate() {
     std::lock_guard<std::mutex> lock(mt);
     switch (this->current) {
