@@ -2,46 +2,6 @@
 #include <SFML/Graphics.hpp>
 #include <thread>
 #include "trafficlight.h"
-int main() {
-    try {
-        // Load the traffic light texture (MUST BE DONE BEFORE constructing any trafficlight)
-        trafficlight::loadTexture();
-    } catch (const std::exception& e) {
-        std::cerr << "Failed to load texture: " << e.what() << std::endl;
-        return 1;
-    }
-
-    // Create a window
-    sf::RenderWindow window(sf::VideoMode({800, 600}), "Traffic Light Test");
-    window.setFramerateLimit(60); // Limit the frame rate to 60 FPS
-
-    // Northbound red starting traffic light
-    trafficlight light(1, 0);
-
-    // Start the traffic light's state change in a separate thread
-    std::thread lightThread(&trafficlight::changecolour, &light);
-    light.setposition(sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2));
-    while (window.isOpen()) {
-        while (auto event = window.pollEvent()) {
-            if (event->is<sf::Event::Closed>()) {window.close();}
-        }
-
-        window.clear(sf::Color::White);
-        light.draw(window);
-        window.display();
-    }
-
-    // Stop the light when the window closes
-    light.stop();
-    lightThread.join(); // Wait for thread to exit safely
-    return 0;
-}
-sf::Sprite mapSpriteLoader(sf::Texture& map) //to load the sprite of map
-{
-    sf::Sprite map_sprite(map);
-    map_sprite.setOrigin({85.f, 385/2.f});
-    return map_sprite;
-}
 sf::Texture mapTextureLoader() //to load the texture of the ma[p
 {
     sf::Texture map;
@@ -49,4 +9,34 @@ sf::Texture mapTextureLoader() //to load the texture of the ma[p
         throw std::runtime_error("Failed to load texture from Graphics-elements/map.png");
     }
     return map;
+}
+int main() {
+    // Creating a window
+    sf::RenderWindow window(sf::VideoMode({1000, 1000}), "Traffic Light Test");
+    window.setFramerateLimit(60); // Limit the frame rate to 60 FPS
+
+
+    //Loading the map
+    sf::Texture mapTexture;
+    try {
+        mapTexture = mapTextureLoader();
+    } catch (const std::exception& e) {
+        std::cerr << "Failed to load texture: " << e.what() << std::endl;
+        return 1;
+    }
+    sf::Sprite map_sprite(mapTexture);
+    map_sprite.setPosition({0.f, 0.f});
+
+
+    while (window.isOpen()) {
+        while (auto event = window.pollEvent()) {
+            if (event->is<sf::Event::Closed>()) {window.close();}
+        }
+
+        window.clear();
+        window.draw(map_sprite);
+        window.display();
+    }
+
+    return 0;
 }
