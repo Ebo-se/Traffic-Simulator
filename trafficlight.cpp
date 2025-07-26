@@ -23,7 +23,7 @@ trafficlight::trafficlight(int dir, int start_state): direction(dir), stopSignal
     if (!textureLoaded) {
         throw std::logic_error("Texture not loaded. Call loadTexture() first!");
     }
-    this->current = (start_state == 2) ? Green : Red;
+    this->current = (start_state == 2) ? Yellow : Red;
     sprite.setOrigin({85.f, 385/2.f}); // Set origin to the center of the traffic light
     states[Red] = sf::IntRect({0, 66}, {170, 385});// Red light
     states[Yellow] = sf::IntRect({553/3,66},{170, 385}); // Yellow light
