@@ -39,8 +39,9 @@ int main() {
     NorthLight.setscale({0.17f, 0.17f}); // Set scale for North light
     EastLight.setposition({400.f, 400.f}); // Set position for East light
     EastLight.setscale({0.17f, 0.17f}); // Set scale for East light
+
     //vehicle
-    vehicle car1(1, sf::Vector2f{548.55f, 895.f});
+    vehicle car1(1, sf::Vector2f{548.55f, 1000.f});
     sf::Clock clock;
     sf::Vector2f northToSouthLane1({0.f,-895.f});
 

@@ -30,7 +30,7 @@ vehicle::vehicle(int dir, sf::Vector2f startpos): vehicleSprite(vehicleTexture)
 }
 void vehicle::move(sf::Vector2f destination)
 {
-    vehicleSprite.move(destination);
+    if (isRunning){vehicleSprite.move(destination);}
 }
 
 int vehicle::getdirection() {return direction;}

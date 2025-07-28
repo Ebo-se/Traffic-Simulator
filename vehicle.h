@@ -12,8 +12,7 @@ class vehicle {
 private:
     int wait_time;
     int direction; //1=N,-1=E
-    double speed = 25.7;
-    bool isRunning;
+    bool isRunning = true;
     sf::Vector2f startpos;
     static inline bool vehicleTextureLoaded = false;
     sf::Sprite vehicleSprite;
