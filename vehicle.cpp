@@ -28,7 +28,10 @@ vehicle::vehicle(int dir, sf::Vector2f startpos): vehicleSprite(vehicleTexture)
     vehicleSprite.setScale(sf::Vector2f(0.04f, 0.04f));
 
 }
-
+void vehicle::move(sf::Vector2f destination)
+{
+    vehicleSprite.move(destination);
+}
 
 int vehicle::getdirection() {return direction;}
 

@@ -29,6 +29,7 @@ int main() {
     //map
     sf::Sprite map_sprite(mapTexture);
     map_sprite.setPosition({0.f, 0.f});
+
     //trafficlight
     trafficlight NorthLight(1, 2); // North light starts red
     trafficlight EastLight(-1, 0); // East light starts green
@@ -40,13 +41,15 @@ int main() {
     EastLight.setscale({0.17f, 0.17f}); // Set scale for East light
     //vehicle
     vehicle car1(1, sf::Vector2f{548.55f, 895.f});
-
+    sf::Clock clock;
+    sf::Vector2f northToSouthLane1({0.f,-895.f});
 
     while (window.isOpen()) {
+        sf::Time timeElapsed = clock.restart();
         while (auto event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {window.close();}
         }
-
+        car1.move(northToSouthLane1*timeElapsed.asSeconds()*0.1f);
         window.clear();
         window.draw(map_sprite);
         NorthLight.draw(window); EastLight.draw(window);

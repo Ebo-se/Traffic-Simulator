@@ -12,7 +12,7 @@ class vehicle {
 private:
     int wait_time;
     int direction; //1=N,-1=E
-    double speed = 35.7;
+    double speed = 25.7;
     bool isRunning;
     sf::Vector2f startpos;
     static inline bool vehicleTextureLoaded = false;
@@ -20,6 +20,7 @@ private:
     static inline sf::Texture vehicleTexture{};
 public:
     vehicle(int dir,sf::Vector2f startpos); //constructor
+    void move(sf::Vector2f);
     int getdirection();
     static void loadTexture();
     void drawVehicle(sf::RenderWindow& window);
