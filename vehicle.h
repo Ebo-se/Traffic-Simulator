@@ -4,6 +4,9 @@
 
 #ifndef VEHICLE_H
 #define VEHICLE_H
+#include "SFML/Graphics/RenderWindow.hpp"
+#include "SFML/Graphics/Sprite.hpp"
+#include "SFML/Graphics/Texture.hpp"
 
 class vehicle {
 private:
@@ -11,11 +14,15 @@ private:
     int direction; //1=N,-1=E
     double speed = 35.7;
     bool isRunning;
-    bool vehicleTextureLoaded = false;
+    sf::Vector2f startpos;
+    static inline bool vehicleTextureLoaded = false;
+    sf::Sprite vehicleSprite;
+    static inline sf::Texture vehicleTexture{};
 public:
-    vehicle(int dir); //constructor
+    vehicle(int dir,sf::Vector2f startpos); //constructor
     int getdirection();
-    void loadTexture();
+    static void loadTexture();
+    void drawVehicle(sf::RenderWindow& window);
 };
 
 #endif //VEHICLE_H

@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <thread>
 #include "trafficlight.h"
+#include "vehicle.h"
 sf::Texture mapTextureLoader() //to load the texture of the ma[p
 {
     sf::Texture map;
@@ -20,12 +21,15 @@ int main() {
     try {
         mapTexture = mapTextureLoader();
         trafficlight::loadTexture();
+        vehicle::loadTexture();
     } catch (const std::exception& e) {
         std::cerr << "Failed to load texture: " << e.what() << std::endl;
         return 1;
     }
+    //map
     sf::Sprite map_sprite(mapTexture);
     map_sprite.setPosition({0.f, 0.f});
+    //trafficlight
     trafficlight NorthLight(1, 2); // North light starts red
     trafficlight EastLight(-1, 0); // East light starts green
     std::thread northLightThread(&trafficlight::changecolour, &NorthLight);
@@ -34,6 +38,10 @@ int main() {
     NorthLight.setscale({0.17f, 0.17f}); // Set scale for North light
     EastLight.setposition({400.f, 400.f}); // Set position for East light
     EastLight.setscale({0.17f, 0.17f}); // Set scale for East light
+    //vehicle
+    vehicle car1(1, sf::Vector2f{548.55f, 895.f});
+
+
     while (window.isOpen()) {
         while (auto event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {window.close();}
@@ -42,6 +50,7 @@ int main() {
         window.clear();
         window.draw(map_sprite);
         NorthLight.draw(window); EastLight.draw(window);
+        car1.drawVehicle(window);
         window.display();
     }
     // Clean up threads
