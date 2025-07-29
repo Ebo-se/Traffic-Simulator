@@ -3,9 +3,9 @@
 //
 
 #include "vehicle.h"
-#include "SFML/Graphics/RenderWindow.hpp"
-#include "SFML/Graphics/Texture.hpp"
-
+#include "SFML/Graphics.hpp"
+#include "trafficlight.h"
+#include <iostream>
 
 void vehicle:: loadTexture()
 {
@@ -27,12 +27,15 @@ vehicle::vehicle(int dir, sf::Vector2f startpos): vehicleSprite(vehicleTexture)
     this->direction = dir;
     vehicleSprite.setPosition(startpos);
     vehicleSprite.setScale(sf::Vector2f(0.04f, 0.04f));
+    Vehiclecollider.setPosition(startpos);
+}
+void vehicle::move(sf::Vector2f destination) {
+    if (isRunning) {
+        vehicleSprite.move(destination);
+        Vehiclecollider.setPosition(vehicleSprite.getPosition());
+    }
+}
 
-}
-void vehicle::move(sf::Vector2f destination)
-{
-    if (isRunning){vehicleSprite.move(destination);}
-}
 
 int vehicle::getdirection() {return direction;}
 
@@ -42,3 +45,17 @@ void vehicle::spawnVehicleNorth(sf::RenderWindow &window)
     window.draw(vehicleSprite);
 }
 
+void vehicle::collisionCheck(const collider &other, trafficlight &traffic) {
+    if (Vehiclecollider.intersects(other)) {
+        if (traffic.getstate() == 0) {stop();}
+        else {start();}
+    }
+}
+
+void vehicle::rotate() {
+    if (direction == 1) {
+        vehicleSprite.setRotation(sf::degrees(0.f)); // North
+    } else if (direction == -1) {
+        vehicleSprite.setRotation(sf::degrees(90.f)); // East
+    }
+}

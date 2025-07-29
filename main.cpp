@@ -39,21 +39,26 @@ int main() {
     NorthLight.setscale({0.17f, 0.17f}); // Set scale for North light
     EastLight.setposition({400.f, 400.f}); // Set position for East light
     EastLight.setscale({0.17f, 0.17f}); // Set scale for East light
-
+    collider northline({140.f,20.f});
+    northline.setPosition({437.5f, 585.f});
+    collider eastline({20.f,150.f});
+    eastline.setPosition({445.f, 420.f});
     //speed
     float redLightspeed = 0.1f;
     float greenLightspeed = 0.125f;
-    float yellowLightspeed = 0.130f;
+    float yellowLightspeed = 0.13f;
 
     //startpos north
     sf::Vector2f northLane1 {548.55f, 1000.f};
+    sf::Vector2f eastlane1 {0, 422.5f};
 
     // movement vectors
     sf::Vector2f northToSouthLane1({0.f,-895.f});
+    sf::Vector2f eastToSouthLane1({900.f,0.f});
 
     // vehicle
     vehicle car(1, northLane1);
-    vehicle car1(-1, northLane1);
+    vehicle car1(-1, eastlane1);
     sf::Clock clock;
     while (window.isOpen()) {
         sf::Time timeElapsed = clock.restart();
@@ -66,25 +71,20 @@ int main() {
         window.draw(map_sprite);
         NorthLight.draw(window); EastLight.draw(window);
 
-
-
-
         car.spawnVehicleNorth(window);
+        car1.rotate();
+        car1.spawnVehicleNorth(window);
         car.move(northToSouthLane1*timeElapsed.asSeconds()*0.1f);
-
-        if (northernLight_state == 0)
-        {
-            car.move(northToSouthLane1*redLightspeed*timeElapsed.asSeconds());
-        }else if (northernLight_state == 2)
-        {
-            car.move(northToSouthLane1*timeElapsed.asSeconds()*greenLightspeed);
-        }else if (northernLight_state == 1)
-        {
-            car.move(northToSouthLane1*timeElapsed.asSeconds()*yellowLightspeed);
-        }
-
+        car.move(eastlane1*timeElapsed.asSeconds()*0.1f);
+        if (northernLight_state == 0) {car.move(northToSouthLane1*redLightspeed*timeElapsed.asSeconds());}
+        else if (northernLight_state == 2){car.move(northToSouthLane1*timeElapsed.asSeconds()*greenLightspeed);}
+        else if (northernLight_state == 1){car.move(northToSouthLane1*timeElapsed.asSeconds()*yellowLightspeed);}
+        if (EastLight.getstate() == 0) {car1.move(eastToSouthLane1*redLightspeed*timeElapsed.asSeconds());}
+        else if (EastLight.getstate() == 2){car1.move(eastToSouthLane1*timeElapsed.asSeconds()*greenLightspeed);}
+        else if (EastLight.getstate() == 1){car1.move(eastToSouthLane1*timeElapsed.asSeconds()*yellowLightspeed);}
+        car.collisionCheck(northline,NorthLight); // Check for collisions with the line collider
+        car1.collisionCheck(eastline,EastLight);
         window.display();
-
 
     }
     // Clean up threads
