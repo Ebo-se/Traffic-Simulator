@@ -40,22 +40,52 @@ int main() {
     EastLight.setposition({400.f, 400.f}); // Set position for East light
     EastLight.setscale({0.17f, 0.17f}); // Set scale for East light
 
-    //vehicle
-    vehicle car1(1, sf::Vector2f{548.55f, 1000.f});
-    sf::Clock clock;
+    //speed
+    float redLightspeed = 0.1f;
+    float greenLightspeed = 0.125f;
+    float yellowLightspeed = 0.130f;
+
+    //startpos north
+    sf::Vector2f northLane1 {548.55f, 1000.f};
+
+    // movement vectors
     sf::Vector2f northToSouthLane1({0.f,-895.f});
 
+    // vehicle
+    vehicle car(1, northLane1);
+    vehicle car1(-1, northLane1);
+    sf::Clock clock;
     while (window.isOpen()) {
         sf::Time timeElapsed = clock.restart();
+        int northernLight_state = NorthLight.getstate();
         while (auto event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {window.close();}
         }
-        car1.move(northToSouthLane1*timeElapsed.asSeconds()*0.1f);
+
         window.clear();
         window.draw(map_sprite);
         NorthLight.draw(window); EastLight.draw(window);
-        car1.drawVehicle(window);
+
+
+
+
+        car.spawnVehicleNorth(window);
+        car.move(northToSouthLane1*timeElapsed.asSeconds()*0.1f);
+
+        if (northernLight_state == 0)
+        {
+            car.move(northToSouthLane1*redLightspeed*timeElapsed.asSeconds());
+        }else if (northernLight_state == 2)
+        {
+            car.move(northToSouthLane1*timeElapsed.asSeconds()*greenLightspeed);
+        }else if (northernLight_state == 1)
+        {
+            car.move(northToSouthLane1*timeElapsed.asSeconds()*yellowLightspeed);
+        }
+
         window.display();
+
+
     }
     // Clean up threads
     NorthLight.stop(); EastLight.stop();

@@ -3,9 +3,10 @@
 //
 
 #include "vehicle.h"
-
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Graphics/Texture.hpp"
+
+
 void vehicle:: loadTexture()
 {
     if (!vehicleTextureLoaded)
@@ -36,7 +37,7 @@ void vehicle::move(sf::Vector2f destination)
 int vehicle::getdirection() {return direction;}
 
 
-void vehicle::drawVehicle(sf::RenderWindow &window)
+void vehicle::spawnVehicleNorth(sf::RenderWindow &window)
 {
     window.draw(vehicleSprite);
 }

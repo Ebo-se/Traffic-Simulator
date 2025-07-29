@@ -22,7 +22,7 @@ public:
     void move(sf::Vector2f);
     int getdirection();
     static void loadTexture();
-    void drawVehicle(sf::RenderWindow& window);
+    void spawnVehicleNorth(sf::RenderWindow& window);
 };
 
 #endif //VEHICLE_H
