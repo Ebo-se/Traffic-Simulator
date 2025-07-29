@@ -3,6 +3,7 @@
 #include <thread>
 #include "trafficlight.h"
 #include "vehicle.h"
+
 sf::Texture mapTextureLoader() //to load the texture of the ma[p
 {
     sf::Texture map;

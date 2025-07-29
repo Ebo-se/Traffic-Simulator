@@ -5,7 +5,6 @@
 #include "vehicle.h"
 #include "SFML/Graphics.hpp"
 #include "trafficlight.h"
-#include <iostream>
 
 void vehicle:: loadTexture()
 {

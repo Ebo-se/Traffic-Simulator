@@ -2,7 +2,6 @@
 // Created by Ebose on 2025-07-23.
 //
 
-#include <iostream>
 #include "trafficlight.h"
 #include <chrono>
 #include <thread>
