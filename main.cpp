@@ -3,7 +3,7 @@
 #include <thread>
 #include "trafficlight.h"
 #include "vehicle.h"
-
+#include "spawner.cpp"
 sf::Texture mapTextureLoader() //to load the texture of the ma[p
 {
     sf::Texture map;
@@ -50,8 +50,8 @@ int main() {
     float yellowLightspeed = 0.13f;
 
     //startpos north
-    sf::Vector2f northLane1 {548.55f, 1000.f};
-    sf::Vector2f eastlane1 {0, 422.5f};
+    sf::Vector2f northLane1 {432.75f, 1000.f};
+    sf::Vector2f eastlane1 {0, 527.95f};
 
     // movement vectors
     sf::Vector2f northToSouthLane1({0.f,-895.f});
@@ -75,6 +75,9 @@ int main() {
         car.spawnVehicleNorth(window);
         car1.rotate();
         car1.spawnVehicleNorth(window);
+        spawner sp;
+        sp.spawnerNORTH(window);
+
         car.move(northToSouthLane1*timeElapsed.asSeconds()*0.1f);
         car.move(eastlane1*timeElapsed.asSeconds()*0.1f);
         if (northernLight_state == 0) {car.move(northToSouthLane1*redLightspeed*timeElapsed.asSeconds());}

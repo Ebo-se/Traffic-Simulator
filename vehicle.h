@@ -7,6 +7,7 @@
 
 #include "SFML/Graphics.hpp"
 #include "collider.cpp"
+
 #include "trafficlight.h"
 
 class vehicle {

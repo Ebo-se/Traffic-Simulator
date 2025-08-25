@@ -41,6 +41,7 @@ int vehicle::getdirection() {return direction;}
 
 void vehicle::spawnVehicleNorth(sf::RenderWindow &window)
 {
+
     window.draw(vehicleSprite);
 }
 
